@@ -1,4 +1,4 @@
-import de.tillmannrohlfing.Patient;
+import de.tillmannrohlfing.util.Patient;
 import de.tillmannrohlfing.binaryTrees.BinarySearchTree;
 
 

@@ -1,4 +1,4 @@
-package de.tillmannrohlfing;
+package de.tillmannrohlfing.util;
 import de.tillmannrohlfing.binaryTrees.ComparableContent;
 public class Patient implements ComparableContent<Patient> {
   
