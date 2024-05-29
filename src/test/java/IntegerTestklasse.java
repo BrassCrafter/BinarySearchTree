@@ -1,23 +1,37 @@
+import com.sun.source.tree.Tree;
 import de.tillmannrohlfing.binaryTrees.BinarySearchTree;
 import de.tillmannrohlfing.util.Number;
 import de.tillmannrohlfing.util.List;
+import de.tillmannrohlfing.util.Patient;
+import de.tillmannrohlfing.util.TreeDrawer;
 
 public class IntegerTestklasse {
     BinarySearchTree<Number> baum;
     List<Number> tiefstesElement;
     public static void main(String[] args) {
         IntegerTestklasse test = new IntegerTestklasse();
-
     }
 
+
     public IntegerTestklasse() {
-        fillSearchTree();
+        fuellen(100);
         System.out.println("Preorder: " + preorder(baum));
         System.out.println("Inorder: " + inorder(baum));
         System.out.println("Postorder: " + postorder(baum));
         System.out.println("Tiefe: " + depth(baum));
+        System.out.println("Balance: " + getBalanceFactor(baum));
+        System.out.println("AveragePathLength: " + getAveragePathLength(baum));
+
+        TreeDrawer.drawTreeInWindow(baum);
         //System.out.println("Anzahl: " + count(baum));
 
+    }
+    private void fuellen(int n){
+        baum = new BinarySearchTree<>();
+        for (int i = 0; i<n ;i++ ){
+            Integer randomInt = (int)(Math.random()*10000);
+            baum.insert(new Number(randomInt));
+        }
     }
 
     public void fillSearchTree() {
@@ -74,4 +88,25 @@ public class IntegerTestklasse {
         left.concat(right);
         return left;
     }
+    public int getBalanceFactor(BinarySearchTree<Number> pTree){
+        if(pTree.isEmpty())
+            return 0;
+        return depth(pTree.getRightTree()) - depth(pTree.getLeftTree());
+    }
+    public int getPathLengths(BinarySearchTree<Number> pTree, int layer){
+        if(pTree.isEmpty())
+            return 0;
+        return getPathLengths(pTree.getLeftTree(), layer + 1) + getPathLengths(pTree.getRightTree(), layer + 1) + layer;
+    }
+    public int getSumOfNotes(BinarySearchTree<Number> pTree){
+        if(pTree.isEmpty())
+            return 0;
+        return getSumOfNotes(pTree.getLeftTree()) + getSumOfNotes(pTree.getRightTree()) + 1;
+    }
+    public int getAveragePathLength(BinarySearchTree<Number> pTree){
+        int pathLengths = getPathLengths(pTree, 0);
+        int getSumOfNotes = getSumOfNotes(pTree);
+        return pathLengths / getSumOfNotes;
+    }
+
 }
